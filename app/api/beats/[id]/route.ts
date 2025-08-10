@@ -24,8 +24,8 @@ export async function GET(req: NextRequest, { params }: Ctx) {
     if (!range.startsWith(prefix)) return new NextResponse(null, { status: 416 });
 
     const [startStr, endStr] = range.slice(prefix.length).split('-');
-    let start = Number(startStr);
-    let end = endStr ? Number(endStr) : fileSize - 1;
+    const start = Number(startStr);
+    const end = endStr ? Number(endStr) : fileSize - 1;
 
     if (Number.isNaN(start) || Number.isNaN(end) || start > end || end >= fileSize) {
       return new NextResponse(null, { status: 416 });
