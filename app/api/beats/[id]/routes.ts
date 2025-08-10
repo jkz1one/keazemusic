@@ -1,27 +1,60 @@
-// 1️⃣ BACKEND: app/api/beats/[id]/route.ts
+// app/api/beats/[id]/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import fs from 'node:fs';
+import path from 'node:path';
+import { Readable } from 'node:stream';
 
-import { NextRequest } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+export const runtime = 'nodejs';
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
-  const filePath = path.join(process.cwd(), 'private_audio', `${id}.mp3`);
+type Ctx = { params: { id: string } };
+
+export async function GET(req: NextRequest, { params }: Ctx) {
+  const filePath = path.join(process.cwd(), 'private_audio', `${params.id}.mp3`);
 
   if (!fs.existsSync(filePath)) {
-    return new Response(null, {
-      status: 204,
-      statusText: 'No Content',
+    return new NextResponse('Not found', { status: 404 });
+  }
+
+  const stat = fs.statSync(filePath);
+  const fileSize = stat.size;
+  const range = req.headers.get('range');
+
+  if (range) {
+    const prefix = 'bytes=';
+    if (!range.startsWith(prefix)) return new NextResponse(null, { status: 416 });
+
+    const [startStr, endStr] = range.slice(prefix.length).split('-');
+    let start = Number(startStr);
+    let end = endStr ? Number(endStr) : fileSize - 1;
+
+    if (Number.isNaN(start) || Number.isNaN(end) || start > end || end >= fileSize) {
+      return new NextResponse(null, { status: 416 });
+    }
+
+    const chunkSize = end - start + 1;
+    const nodeStream = fs.createReadStream(filePath, { start, end });
+    const webStream = Readable.toWeb(nodeStream) as ReadableStream<Uint8Array>;
+
+    return new NextResponse(webStream, {
+      status: 206,
+      headers: {
+        'Content-Type': 'audio/mpeg',
+        'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+        'Accept-Ranges': 'bytes',
+        'Content-Length': String(chunkSize),
+        'Cache-Control': 'no-store',
+      },
     });
   }
 
-  const stream = fs.createReadStream(filePath);
-  return new Response(stream as any, {
+  const nodeStream = fs.createReadStream(filePath);
+  const webStream = Readable.toWeb(nodeStream) as ReadableStream<Uint8Array>;
+
+  return new NextResponse(webStream, {
     headers: {
       'Content-Type': 'audio/mpeg',
+      'Accept-Ranges': 'bytes',
+      'Content-Length': String(fileSize),
       'Cache-Control': 'no-store',
     },
   });
