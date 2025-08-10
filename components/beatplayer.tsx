@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { FaPlay, FaPause } from 'react-icons/fa';
 
 const beats = [
-  { id: 'neon-ash', title: 'NEON ASH' },
+  { id: 'polo1200', title: 'Polo1200' },
   { id: 'obsidian-drift', title: 'OBSIDIAN DRIFT' },
   { id: 'glass-halo', title: 'GLASS HALO' },
 ];
