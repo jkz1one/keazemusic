@@ -6,9 +6,10 @@ import { Readable } from 'node:stream';
 
 export const runtime = 'nodejs';
 
-type Ctx = { params: { id: string } };
-
-export async function GET(req: NextRequest, { params }: Ctx) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   const filePath = path.join(process.cwd(), 'private_audio', `${params.id}.mp3`);
 
   if (!fs.existsSync(filePath)) {
