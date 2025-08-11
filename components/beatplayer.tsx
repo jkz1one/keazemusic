@@ -221,6 +221,16 @@ export default function BeatPlayer() {
     }
   };
 
+  // ⬇ cleanup on unmount so audio stops when leaving the page
+  useEffect(() => {
+    return () => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    };
+  }, [audio]);
+
   return (
     <div className="flex flex-col space-y-4">
       {beats.map((beat) => {
