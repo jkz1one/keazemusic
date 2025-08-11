@@ -5,8 +5,8 @@ import { FaPlay, FaPause } from 'react-icons/fa';
 
 const beats = [
   { id: 'polo1200', title: 'Polo1200' },
-  { id: 'Take the Scenic Route Instead', title: 'Take the Scenic Route Instead' },
-  { id: 'glass-halo', title: 'GLASS HALO' },
+  { id: 'TaketheScenic', title: 'Take the Scenic Route Instead' },
+  { id: 'Drop-It', title: 'Drop It' },
 ];
 
 export default function BeatPlayer() {
