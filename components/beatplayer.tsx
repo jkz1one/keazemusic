@@ -246,7 +246,7 @@ export default function BeatPlayer() {
               <div className="w-24 shrink-0 h-16 flex items-center justify-center">
                 <button
                   onClick={() => playOrPause(beat.id)}
-                  className="w-full flex items-center justify-center gap-2 text-white px-3 py-4 rounded-md hover:bg-white hover:text-black transition text-sm"
+                  className="w-full flex items-center justify-center gap-2 text-white px-3 py-4ç rounded-md hover:bg-white hover:text-black transition text-sm"
                 >
                   {active && isPlaying ? <FaPause className="w-4 h-4" /> : <FaPlay className="w-4 h-4" />}
                   <span>{active && isPlaying ? 'Pause' : 'Play'}</span>
