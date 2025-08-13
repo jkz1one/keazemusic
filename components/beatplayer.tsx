@@ -3,8 +3,33 @@
 import { useEffect, useRef, useState } from 'react';
 import { FaPlay, FaPause } from 'react-icons/fa';
 
-// NEW: simple in-memory cache for decoded peaks
+// ===== CACHING HELPERS (added) =====
 const peaksMemCache = new Map<string, number[]>();
+const PEAKS_VERSION = 'v1'; // bump if you change bars/algo
+
+function peaksKey(id: string, bars: number) {
+  return `peaks:${PEAKS_VERSION}:${id}:bars:${bars}`;
+}
+
+function readPeaksLocal(id: string, bars: number): number[] | null {
+  try {
+    const raw = localStorage.getItem(peaksKey(id, bars));
+    if (!raw) return null;
+    const arr = JSON.parse(raw);
+    return Array.isArray(arr) ? (arr as number[]) : null;
+  } catch {
+    return null;
+  }
+}
+
+function writePeaksLocal(id: string, bars: number, peaks: number[]) {
+  try {
+    localStorage.setItem(peaksKey(id, bars), JSON.stringify(peaks));
+  } catch {
+    // storage might be full or disabled — safe to ignore
+  }
+}
+// ===================================
 
 type Beat = { id: string; title: string };
 
@@ -27,19 +52,31 @@ function Waveform({
   const [peaks, setPeaks] = useState<number[] | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
 
-  // fetch + decode once to build peaks (with in-memory cache)
+  // fetch + decode once to build peaks (now with memory + localStorage cache)
   useEffect(() => {
     let aborted = false;
+    const bars = 600;
 
-    // check cache first
-    const hit = peaksMemCache.get(id);
-    if (hit) {
-      setPeaks(hit);
+    // 1) in-memory cache
+    const mem = peaksMemCache.get(id);
+    if (mem && mem.length > 0) {
+      setPeaks(mem);
       return () => {
         aborted = true;
       };
     }
 
+    // 2) localStorage cache
+    const loc = readPeaksLocal(id, bars);
+    if (loc && loc.length > 0) {
+      peaksMemCache.set(id, loc);
+      setPeaks(loc);
+      return () => {
+        aborted = true;
+      };
+    }
+
+    // 3) decode once and persist
     (async () => {
       // @ts-expect-error - Safari prefix
       const AC: typeof AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -52,7 +89,6 @@ function Waveform({
       if (aborted) return;
 
       const buf = await audioCtxRef.current.decodeAudioData(arr);
-      const bars = 600;
       const chL = buf.getChannelData(0);
       const chR = buf.numberOfChannels > 1 ? buf.getChannelData(1) : chL;
       const block = Math.max(1, Math.floor(chL.length / bars));
@@ -68,7 +104,8 @@ function Waveform({
       });
 
       if (!aborted) {
-        peaksMemCache.set(id, pks); // save for this session
+        peaksMemCache.set(id, pks);
+        writePeaksLocal(id, bars, pks);
         setPeaks(pks);
       }
     })();
