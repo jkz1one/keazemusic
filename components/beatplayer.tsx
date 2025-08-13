@@ -3,6 +3,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { FaPlay, FaPause } from 'react-icons/fa';
 
+// NEW: simple in-memory cache for decoded peaks
+const peaksMemCache = new Map<string, number[]>();
+
 type Beat = { id: string; title: string };
 
 const beats: Beat[] = [
@@ -24,9 +27,19 @@ function Waveform({
   const [peaks, setPeaks] = useState<number[] | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
 
-  // fetch + decode once to build peaks
+  // fetch + decode once to build peaks (with in-memory cache)
   useEffect(() => {
     let aborted = false;
+
+    // check cache first
+    const hit = peaksMemCache.get(id);
+    if (hit) {
+      setPeaks(hit);
+      return () => {
+        aborted = true;
+      };
+    }
+
     (async () => {
       // @ts-expect-error - Safari prefix
       const AC: typeof AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -54,7 +67,10 @@ function Waveform({
         return m;
       });
 
-      if (!aborted) setPeaks(pks);
+      if (!aborted) {
+        peaksMemCache.set(id, pks); // save for this session
+        setPeaks(pks);
+      }
     })();
 
     return () => {
@@ -221,7 +237,7 @@ export default function BeatPlayer() {
     }
   };
 
-  // ⬇ cleanup on unmount so audio stops when leaving the page
+  // cleanup on unmount so audio stops when leaving the page
   useEffect(() => {
     return () => {
       if (audio) {
