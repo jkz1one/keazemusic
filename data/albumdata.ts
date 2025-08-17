@@ -13,6 +13,26 @@ export interface Album {
   
   const albumData: Album[] = [
     {
+      title: "SAGA: NYC - NEAGAS x MELLOMATT", 
+      imgSrc: "/albums/SAGA.jpg",
+      credits: ["Co-Produced, Mixed, Mastered: KEAZE"],
+      links: {
+        spotify: "https://open.spotify.com/album/7c7ETjy69sc7V35h5PKDbE?si=VqQSdErCQHy7YJz-zzrhXw",
+        apple: "https://music.apple.com/us/album/saga-nyc/1820478036",
+        youtube: "https://youtube.com/playlist?list=OLAK5uy_kzgmJAau43dsZNOSonqQRZjgdx49ZkOmI&si=rCQYiZLfomvHrToP"
+      }
+    },  
+    {
+      title: "OFF GRID COMMS - AHZUH", 
+      imgSrc: "/albums/ogc.jpg",
+      credits: ["Mixed, Mastered, & Recorded: KEAZE"],
+      links: {
+        spotify: "https://open.spotify.com/album/4KvR42fjWoxMeENpkgqCif?si=4P2-5wlvSC-MbJ47-sMmGg",
+        apple: "https://music.apple.com/us/album/off-grid-comms/1749715546",
+        youtube: "https://youtube.com/playlist?list=OLAK5uy_kr1pOgXB59mhYgL1UJTiKg9eBvKCoQVTA&si=5W4JO3vKkRaPA8HJ"
+      }
+    },  
+    {
       title: "CHAMPAGNE SHIT FREESTYLE - 3DM x PRETTY KARTIER", 
       imgSrc: "/albums/champagne.jpg",
       credits: ["Recorded: KEAZE"],
@@ -21,7 +41,17 @@ export interface Album {
         apple: "https://music.apple.com/ca/album/champagne-shit-freestyle-single/1747902496",
         youtube: "https://youtu.be/4HRc3bx7l_Y?si=7H37I7mHT0fxSvGO"
       }
-    }, 
+    },
+    {
+      title: "R E D U X - KEAZE", 
+      imgSrc: "/albums/redux.jpg",
+      credits: ["Mixed, Mastered and Produced: KEAZE"],
+      links: {
+        spotify: "https://open.spotify.com/album/3iOCBEsV6piHtziuGeIMmv?si=17QoVoN_Q_2hbxmMeNrp-g",
+        apple: "https://music.apple.com/us/album/r-e-d-u-x-ep/1733587736",
+        youtube: "https://youtube.com/playlist?list=OLAK5uy_lcebYvb46IXoeOdrTGMFZ-4VMHxU9wORs&si=QvLI8VPe_hXkVyhP"
+      }
+    },   
     {
       title: "MY NAME - TYRXNE",
       imgSrc: "/albums/my-name.jpg",
@@ -74,7 +104,7 @@ export interface Album {
     {
       title: "EL PELIGRO - TYRXNE",
       imgSrc: "/albums/el-peligro.jpg",
-      credits: ["PRODUCTION TRACKS 4 & 12: KEAZE"],
+      credits: ["Produced tracks 4 & 12: KEAZE"],
       links: {
         spotify: "https://open.spotify.com/album/3k6a74VruUBkTElU4krcII?si=0TBBYVaITcOmjlnXHPAkeg",
         apple: "https://music.apple.com/us/album/el-peligro-1-5/1713227657",
