@@ -24,7 +24,7 @@ export interface Album {
     },  
     {
       title: "OFF GRID COMMS - AHZUH", 
-      imgSrc: "/albums/ogc.jpg",
+      imgSrc: "/albums/OGC.jpg",
       credits: ["Mixed, Mastered, & Recorded: KEAZE"],
       links: {
         spotify: "https://open.spotify.com/album/4KvR42fjWoxMeENpkgqCif?si=4P2-5wlvSC-MbJ47-sMmGg",
