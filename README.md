@@ -1,25 +1,36 @@
-# KeazeMusic.com — Artist Site & Discography
-- **Production:** https://keazemusic.vercel.app
-  
-KeazeMusic.com is the main web home for audio engineer and artist keaze. Built to be simple and fast using Next.js 15 and Tailwind. The goal is to keep the layout clean, highlight releases, and leave room for future beat / software drops.
 
-##  Tech Stack
+# KeazeMusic.com — Artist Site & Discography
+
+KeazeMusic.com is the main web home for audio engineer/artist Keaze. Built to be fast and simple, using Next.js 15 and Tailwind.
+
+##  Stack
 
 - **Framework:** Next.js 15 (App Router)
 - **Language:** TypeScript
 - **UI:** React + Tailwind CSS
 - **Fonts:** Geist (via `next/font`)
-- **Hosting:** Vercel
+- **Infra:** Squarespace (domain + DNS), Vercel (hosting)
 
 ##  Features
 
-- **Discography Grid** – Releases displayed as a responsive grid of cover art.
-- **Modal Release View** – Clicking a tile opens an overlay with:
-  - release / track details
-  - credits
-  - external links (where applicable)
-- **Focused Layout** – Minimal navigation and copy; the site is about the music first.
-- **Deploy-Ready** – Standard Next.js dev / build commands, deployed via Vercel.
+- **Custom Header Layout**  
+  A hand-built header section (not from a template) with tight spacing, simple nav, and typography tuned for the project instead of a generic landing page feel.
+
+- **Discography Grid + Lightbox**  
+  Releases are displayed in a responsive grid of cover art. Clicking a tile opens a custom-built lightbox overlay — no external modal library — with:
+  - project / track details  
+  - credits  
+  - external links (where applicable)  
+  Background dimming, focus handling, and close behavior are all implemented manually.
+
+- **Fade / VCR-Style Visual Treatment**  
+  Subtle VHS-inspired effects on hover and headers:
+  - softened fade and “VCR” style interference touches on cover images  
+  - gentle distortion and color shift on header / text elements  
+  These are done with CSS and small custom components, not a pre-made theme.
+
+- **Focused, Frictionless Layout**  
+  Very little copy, no busy multi-section landing page — the site is intentionally narrow in scope so you land on the name, the art, and the music right away.
 
 ##  Running Locally
 
@@ -34,13 +45,13 @@ npm run dev
 # http://localhost:3000
 ````
 
-##  Project Structure (high level)
+##  Project Structure
 
 ```text
 keazemusic/
 ├── app/           # routes and top-level pages
-├── components/    # shared UI components
-├── data/          # release metadata / config
+├── components/    # shared UI components (layout, header, lightbox, etc.)
+├── data/          # release metadata / config for the discography
 ├── public/        # images, icons, artwork
 └── ...
 ```
@@ -49,4 +60,4 @@ keazemusic/
 
 * Beat store with audio previews and watermarked downloads
 * “Tools & software” page for plugins or utilities
-* Subtle visual experiments (transition / color tweaks / beat machine visuals) without losing the current feel
+* Additional motion / color passes / beat machine visualsc
