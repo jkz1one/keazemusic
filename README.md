@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KeazeMusic.com — Artist Site & Discography
+- **Production:** https://keazemusic.vercel.app
+  
+KeazeMusic.com is the main web home for audio engineer and artist keaze. Built to be simple and fast using Next.js 15 and Tailwind. The goal is to keep the layout clean, highlight releases, and leave room for future beat / software drops.
 
-## Getting Started
+##  Tech Stack
 
-First, run the development server:
+- **Framework:** Next.js 15 (App Router)
+- **Language:** TypeScript
+- **UI:** React + Tailwind CSS
+- **Fonts:** Geist (via `next/font`)
+- **Hosting:** Vercel
+
+##  Features
+
+- **Discography Grid** – Releases displayed as a responsive grid of cover art.
+- **Modal Release View** – Clicking a tile opens an overlay with:
+  - release / track details
+  - credits
+  - external links (where applicable)
+- **Focused Layout** – Minimal navigation and copy; the site is about the music first.
+- **Deploy-Ready** – Standard Next.js dev / build commands, deployed via Vercel.
+
+##  Running Locally
 
 ```bash
+# install dependencies
+npm install
+
+# start dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# then visit
+# http://localhost:3000
+````
+
+##  Project Structure (high level)
+
+```text
+keazemusic/
+├── app/           # routes and top-level pages
+├── components/    # shared UI components
+├── data/          # release metadata / config
+├── public/        # images, icons, artwork
+└── ...
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+##  Future Ideas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* Beat store with audio previews and watermarked downloads
+* “Tools & software” page for plugins or utilities
+* Subtle visual experiments (transition / color tweaks / beat machine visuals) without losing the current feel
